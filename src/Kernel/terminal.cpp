@@ -99,9 +99,12 @@ void terminal_write(const char* data) {
 void terminal_write(int i)
 {
 	bool neg = false;
+	bool startsZero = false;
 	
 	if (i < 0) { neg = true; i *= -1; }
-
+	
+	if ((i % 10) == 0) startsZero=true;
+	
 	int ii = 0;
 	while (i != 0)
 	{
@@ -118,4 +121,5 @@ void terminal_write(int i)
 		terminal_putchar(((char)(b+48)));
 		ii = ii / 10;
 	}
+	if (startsZero) terminal_putchar('0');
 }

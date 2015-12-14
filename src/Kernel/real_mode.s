@@ -5,7 +5,8 @@ push %ebp
 movl %esp, %ebp
 movl 8(%ebp),%eax
 movl 12(%ebp),%ecx
-addl %ecx, %eax
-movl %esp, %ebp
+add %ecx, %eax
+//movl $0, %eax Vysledok je v EAX
+movl %ebp, %esp
 popl %ebp
 ret
