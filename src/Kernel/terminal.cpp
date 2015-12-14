@@ -90,8 +90,32 @@ void terminal_putchar(char c) {
 	}
 }
  
-void terminal_writestring(const char* data) {
+void terminal_write(const char* data) {
 	size_t datalen = strlen(data);
 	for (size_t i = 0; i < datalen; i++)
 		terminal_putchar(data[i]);
+}
+
+void terminal_write(int i)
+{
+	bool neg = false;
+	
+	if (i < 0) { neg = true; i *= -1; }
+
+	int ii = 0;
+	while (i != 0)
+	{
+		ii *= 10;
+		ii += i % 10;
+		i /= 10;
+	}
+	
+	if (neg) terminal_putchar('-');
+
+	while (ii != 0)
+	{
+		int b = ii % 10;
+		terminal_putchar(((char)(b+48)));
+		ii = ii / 10;
+	}
 }
