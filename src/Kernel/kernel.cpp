@@ -13,21 +13,21 @@
 //extern "C" {int add(int a, int b);}
 //extern "C" {int sub(int a, int b);}
 
+Terminal terminal;
 
 #if defined(__cplusplus)
-
 extern "C"
-
 #endif
+
 void kernel_main() {
-	terminal_initialize();
-	terminal_write("THIS!\nIS!\nKERNEEEEL!\n");
+	terminal.initialize();
+	terminal.write("THIS!\nIS!\nKERNEEEEL!\n");
 	while (true)
 	{
 		int i = inb(0x60);
-		terminal_write(i);
-		terminal_write("     ");
-		terminal_column = 0;
+		terminal.write(i);
+		terminal.write("     ");
+		terminal.column = 0;
 		i++;
 	}
 }	

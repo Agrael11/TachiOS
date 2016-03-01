@@ -1,83 +1,82 @@
 #include "terminal.h"
 
-uint16_t terminal_row = 0;
-uint16_t terminal_column = 0;
-uint8_t terminal_color = 0;
-uint16_t* terminal_buffer = 0;
+uint16_t Terminal::row = 0;
+uint16_t Terminal::column = 0;
+uint8_t Terminal::color = 0;
+uint16_t* Terminal::buffer = 0;
 
-
-uint8_t make_color(enum vga_color fg, enum vga_color bg) {
+uint8_t Terminal::make_color(enum vga_color fg, enum vga_color bg) {
 	return fg | bg << 4;
 }
  
-uint16_t make_vgaentry(char c, uint8_t color) {
+uint16_t Terminal::make_vgaentry(char c, uint8_t color) {
 	uint16_t c16 = c;
 	uint16_t color16 = color;
 	return c16 | color16 << 8;
 }
  
-uint16_t strlen(string str) {
+uint16_t Terminal::strlen(string str) {
 	uint16_t ret = 0;
 	while ( str[ret] != 0 )
 		ret++;
 	return ret;
 }
  
-void terminal_initialize() {
-	terminal_row = 0;
-	terminal_column = 0;
-	terminal_color = make_color(COLOR_LIGHT_GREY, COLOR_BLACK);
-	terminal_buffer = (uint16_t*) 0xB8000;
+void Terminal::initialize() {
+	row = 0;
+	column = 0;
+	color = make_color(COLOR_LIGHT_GREY, COLOR_BLACK);
+	buffer = (uint16_t*) 0xB8000;
 	for (uint16_t y = 0; y < VGA_HEIGHT; y++) {
 		for (uint16_t x = 0; x < VGA_WIDTH; x++) {
 			const uint16_t index = y * VGA_WIDTH + x;
-			terminal_buffer[index] = make_vgaentry(' ', terminal_color);
+			buffer[index] = make_vgaentry(' ', color);
 		}
 	}
 }
  
-void terminal_setcolor(uint8_t color) {
-	terminal_color = color;
+void Terminal::setcolor(uint8_t _color) {
+	color = _color;
 }
  
-void terminal_putentryat(char c, uint8_t color, uint16_t x, uint16_t y) {
+void Terminal::putentryat(char c, uint8_t color, uint16_t x, uint16_t y) {
 	const uint16_t index = y * VGA_WIDTH + x;
-	terminal_buffer[index] = make_vgaentry(c, color);
+	buffer[index] = make_vgaentry(c, color);
 }
 
 
-void terminal_scroll()
+void Terminal::scroll()
 {
-	terminal_row = 0;
+	row = 0;
 }
  
-void terminal_putchar(char c) {
+void Terminal::putchar(char c) {
 	if (c=='\n')
 	{
-		terminal_column = 0;
-		if (++terminal_row == VGA_HEIGHT) {
-			terminal_scroll();
+		column = 0;
+		if (++row == VGA_HEIGHT) {
+			scroll();
 		}
 	}
 	else
 	{
-		terminal_putentryat(c, terminal_color, terminal_column, terminal_row);
-		if (++terminal_column == VGA_WIDTH) {
-			terminal_column = 0;
-			if (++terminal_row == VGA_HEIGHT) {
-				terminal_scroll();
+		putentryat(c, color, column, row);
+		if (++column == VGA_WIDTH) {
+			column = 0;
+			if (++row == VGA_HEIGHT) {
+				scroll();
 			}
 		}
 	}
 }
  
-void terminal_write(string data) {
+void Terminal::write(string data) {
 	uint16_t datalen = strlen(data);
 	for (uint16_t i = 0; i < datalen; i++)
-		terminal_putchar(data[i]);
+		putchar(data[i]);
 }
 
-void terminal_write(int i)
+void Terminal::write(int i)
 {
 	bool neg = false;
 	bool startsZero = false;
@@ -94,13 +93,13 @@ void terminal_write(int i)
 		i /= 10;
 	}
 	
-	if (neg) terminal_putchar('-');
+	if (neg) putchar('-');
 
 	while (ii != 0)
 	{
 		int b = ii % 10;
-		terminal_putchar(((char)(b+48)));
+		putchar(((char)(b+48)));
 		ii = ii / 10;
 	}
-	if (startsZero) terminal_putchar('0');
+	if (startsZero) putchar('0');
 }
