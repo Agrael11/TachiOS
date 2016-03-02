@@ -35,8 +35,8 @@ _start:
 
 	movl $stack_top, %esp
 
-	# Teraz zavoláme funkciu kernel_main zo súboru C
-	call kernel_main
+	# Teraz zavoláme funkciu kernelStartPoint zo súboru C
+	call kernelStartPoint
 
 	# Po ukončení funkcie zasekneme PC
 	cli

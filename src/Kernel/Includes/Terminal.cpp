@@ -1,9 +1,30 @@
-#include "terminal.h"
+#include "Types.h"
+#include "Terminal.h"
 
 uint16_t Terminal::row = 0;
 uint16_t Terminal::column = 0;
 uint8_t Terminal::color = 0;
 uint16_t* Terminal::buffer = 0;
+
+Terminal::Terminal()
+{
+	row = 0;
+	column = 0;
+	color = make_color(COLOR_LIGHT_GREY, COLOR_BLACK);
+	buffer = (uint16_t*) 0xB8000;
+	for (uint16_t y = 0; y < VGA_HEIGHT; y++) {
+		for (uint16_t x = 0; x < VGA_WIDTH; x++) {
+			const uint16_t index = y * VGA_WIDTH + x;
+			buffer[index] = make_vgaentry(' ', color);
+		}
+	}
+	write("Terminal Initialized\n");
+}
+
+Terminal::~Terminal()
+{
+	write("Terminal Deinitialized\n");
+}
 
 uint8_t Terminal::make_color(enum vga_color fg, enum vga_color bg) {
 	return fg | bg << 4;
@@ -15,26 +36,8 @@ uint16_t Terminal::make_vgaentry(char c, uint8_t color) {
 	return c16 | color16 << 8;
 }
  
-uint16_t Terminal::strlen(string str) {
-	uint16_t ret = 0;
-	while ( str[ret] != 0 )
-		ret++;
-	return ret;
-}
- 
-void Terminal::initialize() {
-	row = 0;
-	column = 0;
-	color = make_color(COLOR_LIGHT_GREY, COLOR_BLACK);
-	buffer = (uint16_t*) 0xB8000;
-	for (uint16_t y = 0; y < VGA_HEIGHT; y++) {
-		for (uint16_t x = 0; x < VGA_WIDTH; x++) {
-			const uint16_t index = y * VGA_WIDTH + x;
-			buffer[index] = make_vgaentry(' ', color);
-		}
-	}
-}
- 
+
+
 void Terminal::setcolor(uint8_t _color) {
 	color = _color;
 }
@@ -47,7 +50,18 @@ void Terminal::putentryat(char c, uint8_t color, uint16_t x, uint16_t y) {
 
 void Terminal::scroll()
 {
-	row = 0;
+	for (int x = 0; x < VGA_WIDTH; x++)
+	{
+		for (int y = 1; y < VGA_HEIGHT; y++)
+		{
+			buffer[(y-1) * VGA_WIDTH + x] = buffer[y * VGA_WIDTH + x];
+		}
+	}
+	for (int x = 0; x < VGA_WIDTH; x++)
+	{
+		buffer[(VGA_HEIGHT-1) * VGA_WIDTH + x] = make_vgaentry(' ', color);
+	}
+	row--;
 }
  
 void Terminal::putchar(char c) {
@@ -80,7 +94,7 @@ void Terminal::write(int i)
 {
 	bool neg = false;
 	bool startsZero = false;
-	
+	//Replace with toString
 	if (i < 0) { neg = true; i *= -1; }
 	
 	if ((i % 10) == 0) startsZero=true;

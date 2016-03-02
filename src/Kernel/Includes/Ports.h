@@ -1,7 +1,7 @@
 #ifndef PORTS
 #define PORTS
 
-#include "types.h"
+#include "Types.h"
 
 inline void outb(int port, int value)
 {

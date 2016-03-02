@@ -11,4 +11,9 @@ typedef unsigned long long uint64_t;
 typedef signed long long int64_t;
 typedef const char* string;
 
+string addToString(string str, char c);
+string combineStrings(string string1, string string2);
+string intToString(uint32_t number);
+uint16_t strlen(string str);
+
 #endif

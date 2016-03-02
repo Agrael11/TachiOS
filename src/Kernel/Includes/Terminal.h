@@ -1,7 +1,7 @@
 #ifndef TERMINAL
 #define TERMINAL
 
-#include "types.h"
+#include "Types.h"
 
 class Terminal
 {
@@ -34,16 +34,16 @@ public:
 public:
 	uint8_t make_color(enum vga_color fg, enum vga_color bg);
 	uint16_t make_vgaentry(char c, uint8_t color);
-	uint16_t strlen(string str);
 	static const uint16_t VGA_WIDTH = 80;
 	static const uint16_t VGA_HEIGHT = 25;
-	void initialize();
 	void setcolor(uint8_t color);
 	void putentryat(char c, uint8_t color, uint16_t x, uint16_t y);
 	void scroll();
 	void putchar(char c);
 	void write(string data);
 	void write(int i);
+	Terminal();
+	~Terminal();
 };
 
 #endif
