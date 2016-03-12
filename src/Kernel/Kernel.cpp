@@ -10,6 +10,7 @@
 #include "Includes/Types.h"
 #include "Includes/Ports.h"
 #include "Includes/Terminal.h"
+#include "Includes/Memory.h"
 
 class Kernel
 {

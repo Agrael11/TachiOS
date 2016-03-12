@@ -1,7 +1,7 @@
 .set ALIGN,    1<<0             # Zarovnanie modulov na stránku
 .set MEMINFO,  1<<1             # Mapa pamäte
 .set FLAGS,    ALIGN | MEMINFO  # Vlajka pre "Multiboot"
-.set MAGIC,    0x1BADB002       # Magické číslo - na nájdenie headeru
+.set MAGIC,    0x1BADB002       # Magicke cislo - na najdenie headeru
 .set CHECKSUM, -(MAGIC + FLAGS) # Checksum prvých 4 riadkov
 
 

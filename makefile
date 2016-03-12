@@ -13,15 +13,17 @@ build:
 	$(CC) src/Kernel/Includes/Terminal.cpp -o terminal.o $(CCFLAGS)
 	$(CC) src/Kernel/Includes/Keyboard.cpp -o keyboard.o $(CCFLAGS)
 	$(CC) src/Kernel/Includes/Types.cpp -o types.o $(CCFLAGS)
+	$(CC) src/Kernel/Includes/Memory.cpp -o memory.o $(CCFLAGS)
 	$(ASM) src/Kernel/boot.s -o boot.o $(ASMFLAGS)
-	$(CC) $(LDFLAGS) -o kernel.bin boot.o terminal.o keyboard.o types.o kernel.o
+	$(CC) $(LDFLAGS) -o kernel.bin boot.o memory.o terminal.o keyboard.o types.o kernel.o
 	cp src/boot/grub.cfg isodir/boot/grub/grub.cfg
 	mv kernel.bin isodir/boot/kernel.bin
-	rm kernel.o
 	rm boot.o
+	rm memory.o
 	rm terminal.o
 	rm keyboard.o
 	rm types.o
+	rm kernel.o
 	mv isodir/boot/kernel.bin bin/kernel.bin
 
 test:
