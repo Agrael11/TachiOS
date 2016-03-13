@@ -42,6 +42,8 @@ public:
 	void putchar(char c);
 	void write(string data);
 	void write(int i);
+	void writeLine(string data);
+	void writeLine(int i);
 	Terminal();
 	~Terminal();
 };

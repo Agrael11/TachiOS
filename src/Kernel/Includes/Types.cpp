@@ -1,4 +1,4 @@
-#include "Types.h";
+#include "Types.h"
 
 string addToString(string str, char c)
 {

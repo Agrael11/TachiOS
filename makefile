@@ -4,7 +4,7 @@ CCFLAGS=-c -ffreestanding -O2 -Wall -Wextra -fno-exceptions -fno-rtti
 ASMFLAGS=
 LDFLAGS=-T src/linker.ld -ffreestanding -O2 -nostdlib -lgcc
 MKRESCUE=grub-mkrescue
-QEMU=qemu-system-i386 
+QEMU=qemu-system-x86_64 
 
 all: build
 
@@ -27,10 +27,10 @@ build:
 	mv isodir/boot/kernel.bin bin/kernel.bin
 
 test:
-	$(QEMU) -kernel bin/kernel.bin
+	$(QEMU) -kernel bin/kernel.bin -m 512M
 
 build_and_test: build
-	$(QEMU) -kernel bin/kernel.bin
+	$(QEMU) -kernel bin/kernel.bin -m 512M
 
 
 	

@@ -1,5 +1,6 @@
-#include "Ports.h";
+#include "Ports.h"
 #include "Memory.h"
+#include "Multiboot.h"
 
 uint8_t readmemory8(uint64_t address)
 {
@@ -46,20 +47,3 @@ void setmemory64(uint64_t address, uint64_t value)
 	uint64_t* pointer = (uint64_t*)address;
 	*pointer = value;
 }
-
-uint16_t getTotal()
-{
-    uint16_t total;
-    uint8_t lowmem, highmem;
-
-    outb(0x70, 0x30);
-    lowmem = inb(0x71);
-    outb(0x70, 0x31);
-    highmem = inb(0x71);
-
-    total = lowmem | highmem << 8;
-    return total;
-}
-
-uint16_t total;
-uint16_t firstAdd = 0;

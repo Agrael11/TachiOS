@@ -90,6 +90,12 @@ void Terminal::write(string data) {
 		putchar(data[i]);
 }
 
+void Terminal::writeLine(string data)
+{
+	write(data);
+	write("\n");
+}
+
 void Terminal::write(int i)
 {
 	bool neg = false;
@@ -116,4 +122,10 @@ void Terminal::write(int i)
 		ii = ii / 10;
 	}
 	if (startsZero) putchar('0');
+}
+
+void Terminal::writeLine(int data)
+{
+	write(data);
+	write("\n");
 }
