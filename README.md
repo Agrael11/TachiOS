@@ -4,12 +4,12 @@ I have no idea what I'm doing.... Feel free to help.. pleaaase
 
 #Changelog  
 **13.3.2016**
->Added Multibood header
->Added MemoryMap structure
->Added method to read specific MemoryMap
->Added new|delete placeholders
->Added WriteLine method to Terminal class for cleaner writing
->Changed definition of size_t to unsigned long from unsigned int
+>Added Multibood header  
+>Added MemoryMap structure  
+>Added method to read specific MemoryMap  
+>Added new|delete placeholders  
+>Added WriteLine method to Terminal class for cleaner writing  
+>Changed definition of size_t to unsigned long from unsigned int  
 >And surely something else that I don't remember...
 
 **2.3.2016**  
@@ -17,7 +17,7 @@ I have no idea what I'm doing.... Feel free to help.. pleaaase
 >Moved strlen method to Types files  
 >Added string method skeletons to Types files  
 >Added Keyboard files skeletons  
->Changed main method to show simple ASCII art
+>Changed main method to show simple ASCII art  
 >Changed keyboard scancode logging to make new lines
 
 **1.3.2016**  
